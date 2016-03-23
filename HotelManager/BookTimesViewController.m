@@ -29,9 +29,6 @@
     [super viewDidLoad];
     [self setupBTVC];
     [self setupPickers];
-    [[self.view viewWithTag:101] removeFromSuperview];
-    [[self.view viewWithTag:102] removeFromSuperview];
-    [[self.view viewWithTag:103] removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {

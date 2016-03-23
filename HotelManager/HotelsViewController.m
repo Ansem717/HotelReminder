@@ -54,6 +54,7 @@
 
 - (void)setupTableView {
     float navBarHeight = CGRectGetHeight(self.navigationController.navigationBar.frame)+20;
+    navBarHeight = 0.0;
     
     self.tableView = [[UITableView alloc]init];
     self.tableView.delegate = self;

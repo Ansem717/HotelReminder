@@ -6,8 +6,8 @@
 //  Copyright © 2016 Ansem717. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface BookTimesViewController : ViewController
+@interface BookTimesViewController : UIViewController
 
 @end

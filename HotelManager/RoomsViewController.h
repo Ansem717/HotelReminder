@@ -6,10 +6,10 @@
 //  Copyright © 2016 Ansem717. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 #import "Hotel.h"
 
-@interface RoomsViewController : ViewController
+@interface RoomsViewController : UIViewController
 
 @property (strong, nonatomic) Hotel *hotel;
 

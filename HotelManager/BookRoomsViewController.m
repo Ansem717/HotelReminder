@@ -7,6 +7,7 @@
 //
 
 #import "BookRoomsViewController.h"
+#import "BookGuestViewController.h"
 #import "AppDelegate.h"
 #import "Room.h"
 #import "Hotel.h"
@@ -45,12 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self.view viewWithTag:101] removeFromSuperview];
-    [[self.view viewWithTag:102] removeFromSuperview];
-    [[self.view viewWithTag:103] removeFromSuperview];
-    for (Hotel * hotel in self.datasource) {
-        NSLog(@"%@", hotel.name);
-    }
+    [self.navigationItem setTitle:@"Reserve Room"];
     [self setupTableView];
 }
 
@@ -128,7 +124,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"The wheels on the bus... UGH! MY head hurts");
+    BookGuestViewController * bookGuestVC = [[BookGuestViewController alloc]init];
+    bookGuestVC.startDate = self.startDate;
+    bookGuestVC.endDate = self.endDate;
+    NSArray * roomsInSection = [[[self.datasource objectAtIndex:indexPath.section] rooms] allObjects];
+    bookGuestVC.room = [roomsInSection objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:bookGuestVC animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
