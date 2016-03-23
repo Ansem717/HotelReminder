@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "HotelsViewController.h"
+#import "BookTimesViewController.h"
 
 @interface ViewController ()
 
@@ -106,6 +107,10 @@
     [browseButton addTarget:self action:@selector(browseButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [bookButton addTarget:self action:@selector(bookButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [lookupButton addTarget:self action:@selector(lookupButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [browseButton setTag:101];
+    [bookButton setTag:102];
+    [lookupButton setTag:103];
 }
 
 - (void)browseButtonSelected:(UIButton *)sender {
@@ -113,7 +118,7 @@
 }
 
 - (void)bookButtonSelected:(UIButton *)sender {
-    NSLog(@"Making reservation...");
+    [self.navigationController pushViewController:[[BookTimesViewController alloc]init] animated:YES];
 }
 
 - (void)lookupButtonSelected:(UIButton *)sender {

@@ -35,7 +35,6 @@
     [super viewDidLoad];
     [self setupHotelsVC];
     [self setupTableView];
-//    NSLog(@"%@", self.datasource);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,6 +53,11 @@
     self.tableView.dataSource = self;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.tableView];
+    
+    [[self.view viewWithTag:101] removeFromSuperview];
+    [[self.view viewWithTag:102] removeFromSuperview];
+    [[self.view viewWithTag:103] removeFromSuperview];
+    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:self.tableView
