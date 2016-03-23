@@ -9,6 +9,11 @@
 #import "ViewController.h"
 #import "HotelsViewController.h"
 #import "BookTimesViewController.h"
+#import "AppDelegate.h"
+#import "Reservation.h"
+#import "Room.h"
+#import "Guest.h"
+#import "Hotel.h"
 
 @interface ViewController ()
 
@@ -123,7 +128,21 @@
 }
 
 - (void)lookupButtonSelected:(UIButton *)sender {
-    NSLog(@"Searching for reservations...");
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
+    NSError *error;
+    NSArray * results = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+        return;
+    }
+    for (Reservation * reservation in results) {
+        NSLog(@"STARTS ON: %@", reservation.startDate);
+        NSLog(@"ENDS ON: %@", reservation.endDate);
+        NSLog(@"IN ROOM: Room %@ in the %@", reservation.room.roomNum, reservation.room.hotel.name);
+        NSLog(@"WITH GUEST: %@ %@\n\n\n", reservation.guest.firstName, reservation.guest.lastName);
+    }
 }
 
 

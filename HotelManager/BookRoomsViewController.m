@@ -101,7 +101,14 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[self.datasource objectAtIndex:section] rooms] count];
+    NSInteger totalCount = 0;
+    NSInteger maxCount = [[[self.datasource objectAtIndex:section] rooms] count];
+    for (Room *room in [[self.datasource objectAtIndex:section] rooms]) {
+        if (room.reservation) {
+            totalCount++;
+        }
+    };
+    return maxCount - totalCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,7 +118,14 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
-    NSArray * roomsInSection = [[[self.datasource objectAtIndex:indexPath.section] rooms] allObjects];
+    NSMutableArray * roomsInSection = [NSMutableArray new];
+    
+    for (Room *room in [[self.datasource objectAtIndex:indexPath.section] rooms]) {
+        if (!room.reservation) {
+            [roomsInSection addObject:room];
+        }
+    }
+    
     Room *room = [roomsInSection objectAtIndex:indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"Room %@ - %@ beds for $%@.99 per night", room.roomNum, room.numOfBeds, room.rate];
     
@@ -127,8 +141,15 @@
     BookGuestViewController * bookGuestVC = [[BookGuestViewController alloc]init];
     bookGuestVC.startDate = self.startDate;
     bookGuestVC.endDate = self.endDate;
-    NSArray * roomsInSection = [[[self.datasource objectAtIndex:indexPath.section] rooms] allObjects];
+    
+    NSMutableArray * roomsInSection = [NSMutableArray new];
+    for (Room *room in [[self.datasource objectAtIndex:indexPath.section] rooms]) {
+        if (!room.reservation) {
+            [roomsInSection addObject:room];
+        }
+    }
     bookGuestVC.room = [roomsInSection objectAtIndex:indexPath.row];
+    
     [self.navigationController pushViewController:bookGuestVC animated:YES];
 }
 

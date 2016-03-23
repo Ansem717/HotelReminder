@@ -83,25 +83,13 @@
         BOOL isSaved = [self.managedObjectContext save:&saveError];
         
         if (isSaved) {
-            NSLog(@"Saved!");
+//            NSLog(@"Saved!");
         } else {
             NSLog(@"%@", [saveError localizedDescription]);
         }
         
     }
 }
-
-- (void)testBootstrapData {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
-    NSError *fetchERR;
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&fetchERR];
-    if (!fetchERR) {
-        for (Hotel *hotel in results) {
-            NSLog(@"Hotel name: %@", hotel.name);
-        }
-    }
-}
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self setUpRVC];

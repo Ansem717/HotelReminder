@@ -78,7 +78,8 @@
     [self.endLabel setFont:[UIFont fontWithName:@"Arial" size:21]];
     
     [self.nextButton setTitle:@"Next" forState:UIControlStateNormal];
-    [self.nextButton setBackgroundColor:[UIColor grayColor]];
+    [self.nextButton setBackgroundColor:[UIColor lightGrayColor]];
+    [self.nextButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     NSDictionary *views = [[NSDictionary alloc]initWithObjects:@[self.startLabel, self.endLabel, self.startDatePicker, self.endDatePicker, self.nextButton] forKeys:@[@"startText", @"endText", @"startDate", @"endDate", @"next"]];
 

@@ -10,7 +10,7 @@
 #import "Room.h"
 #import "AppDelegate.h"
 
-@interface RoomsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface RoomsViewController () <UITableViewDataSource>
 
 @property (strong, nonatomic) NSArray *datasource;
 @property (strong, nonatomic) UITableView *tableView;
@@ -50,7 +50,7 @@
     navBarHeight = 0.0;
     
     self.tableView = [[UITableView alloc]init];
-    self.tableView.delegate = self;
+//    self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.tableView];
@@ -122,9 +122,9 @@
     return imageView;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Would you like to book a room?");
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+////    NSLog(@"Would you like to book a room?");
+//}
 
 
 
