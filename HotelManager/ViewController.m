@@ -32,6 +32,7 @@
 
 - (void)setupCustomLayout {
     [self.navigationItem setTitle:@"Hotel Manager"];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setupViewController {

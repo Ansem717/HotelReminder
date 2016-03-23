@@ -7,19 +7,147 @@
 //
 
 #import "BookRoomsViewController.h"
+#import "AppDelegate.h"
+#import "Room.h"
+#import "Hotel.h"
 
-@interface BookRoomsViewController ()
+@interface BookRoomsViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) NSMutableArray * datasource;
+@property (strong, nonatomic) UITableView * roomsTableView;
 
 @end
 
 @implementation BookRoomsViewController
 
+- (NSMutableArray *)datasource {
+    if (!_datasource) {
+        _datasource = [NSMutableArray new];
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        NSManagedObjectContext *context = delegate.managedObjectContext;
+        NSFetchRequest *q = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
+        NSError *error;
+        NSArray *result = [context executeFetchRequest:q error:&error];
+        if (error) {
+            NSLog(@"%@", [error localizedDescription]);
+        } else {
+            for (Hotel *hotel in result) {
+                [_datasource addObject:hotel];
+            }
+        }
+    }
+    return _datasource;
+}
+
+- (void)loadView {
+    [super loadView];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self.view viewWithTag:101] removeFromSuperview];
+    [[self.view viewWithTag:102] removeFromSuperview];
+    [[self.view viewWithTag:103] removeFromSuperview];
+    for (Hotel * hotel in self.datasource) {
+        NSLog(@"%@", hotel.name);
+    }
+    [self setupTableView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+- (void)setupTableView {
+//    float navBarHeight = CGRectGetHeight(self.navigationController.navigationBar.frame)+20;
+    
+    self.roomsTableView = [[UITableView alloc]init];
+    self.roomsTableView.delegate = self;
+    self.roomsTableView.dataSource = self;
+    self.roomsTableView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.roomsTableView];
+    [self.roomsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    
+    NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:self.roomsTableView
+                                                               attribute:NSLayoutAttributeLeading
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.view
+                                                               attribute:NSLayoutAttributeLeading
+                                                              multiplier:1.0
+                                                                constant:0.0];
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.roomsTableView
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.view
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1.0
+                                                            constant:0.0];
+    NSLayoutConstraint *trailing = [NSLayoutConstraint constraintWithItem:self.roomsTableView
+                                                                attribute:NSLayoutAttributeTrailing
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeTrailing
+                                                               multiplier:1.0
+                                                                 constant:0.0];
+    NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.roomsTableView
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:0.0];
+    
+    leading.active = YES;
+    top.active = YES;
+    trailing.active = YES;
+    bottom.active = YES;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[[self.datasource objectAtIndex:section] rooms] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    
+    NSArray * roomsInSection = [[[self.datasource objectAtIndex:indexPath.section] rooms] allObjects];
+    Room *room = [roomsInSection objectAtIndex:indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"Room %@ - %@ beds for $%@.99 per night", room.roomNum, room.numOfBeds, room.rate];
+    
+    return cell;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    Hotel * sectionHotel = [self.datasource objectAtIndex:section];
+    return sectionHotel.name;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"The wheels on the bus... UGH! MY head hurts");
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.datasource.count;
+}
+
+
+
+
+
+
+
+
 @end
+
+
+
+
+
+
+
+

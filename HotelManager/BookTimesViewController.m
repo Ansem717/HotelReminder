@@ -29,6 +29,9 @@
     [super viewDidLoad];
     [self setupBTVC];
     [self setupPickers];
+    [[self.view viewWithTag:101] removeFromSuperview];
+    [[self.view viewWithTag:102] removeFromSuperview];
+    [[self.view viewWithTag:103] removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,10 +140,6 @@
                                                                            views:views];
     [self.view addConstraints:nextButtonX];
     [self.view addConstraints:nextButtonY];
-    
-    [[self.view viewWithTag:101] removeFromSuperview];
-    [[self.view viewWithTag:102] removeFromSuperview];
-    [[self.view viewWithTag:103] removeFromSuperview];
     
     [self.nextButton addTarget:self action:@selector(nextButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.startDatePicker addTarget:self action:@selector(startDateChanged:) forControlEvents:UIControlEventValueChanged];
