@@ -22,10 +22,10 @@
         DELEGATE_CONTEXT;
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
         NSError *error;
+        _reservations = [context executeFetchRequest:request error:&error];
         if (error) {
             NSLog(@"%@", [error localizedDescription]);
         }
-        _reservations = [context executeFetchRequest:request error:&error];
     }
     return _reservations;
 }
@@ -55,15 +55,12 @@
     newReservation.room = room;
     
     newGuest.reservation = newReservation;
-    newReservation.guest = newGuest; //I was going to set both of these to be weak as to avoid a retain cycle...
-    //  But we have set rooms.hotel and hotel.rooms the same way without making the properties weak.
-    //  What am I missing? Is this not a retain cycle? Or should we have set them all to be weak?
+    newReservation.guest = newGuest;
     
     newReservation.room.reservation = newReservation;
     
     NSError *saveError;
     BOOL isSaved = [context save:&saveError];
-    
     completion(isSaved, saveError);
 }
 
@@ -71,8 +68,44 @@
 	
 }
 
-- (void)doesReservationExist:(Reservation *)reservation {
-	
+- (void)doesReservationExistWithStartTime:(NSDate *)startTime andEndTime:(NSDate *)endTime andRoom:(Room *)room completion:(void(^)(BOOL doesExist))completion {
+    DELEGATE_CONTEXT;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
+    NSError *error;
+    NSArray * result = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+        abort();
+    }
+    for (Reservation *storedReservation in result) {
+        if ([storedReservation.room isEqual:room]) {
+            NSDate * laterStart = [storedReservation.startDate laterDate:startTime];
+            NSDate * earlierEnd = [storedReservation.endDate earlierDate:endTime];
+            if ([laterStart compare:earlierEnd] == NSOrderedAscending) {
+                completion(YES);
+            }
+        }
+    }
+    completion(NO);
 }
 
+
+
+
+
+
+
+
+
+
+
 @end
+
+
+
+
+
+
+
+
+

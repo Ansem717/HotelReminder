@@ -22,6 +22,6 @@ typedef void(^savedCompletion)(BOOL success, NSError *error);
 - (void)addReservationWithStartTime:(NSDate *)startTime andEndTime:(NSDate *)endTime andRoom:(Room *)room andGuestFirstName:(NSString *)guestFirstName andGuestLastName:(NSString *)guestLastName andGuestEmail:(NSString *)guestEmail completion:(savedCompletion)completion;
 
 - (void)removeReservation:(Reservation *)reservation;
-- (void)doesReservationExist:(Reservation *)reservation;
+- (void)doesReservationExistWithStartTime:(NSDate *)startTime andEndTime:(NSDate *)endTime andRoom:(Room *)room completion:(void(^)(BOOL doesExist))completion;
 
 @end
