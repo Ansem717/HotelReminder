@@ -102,15 +102,6 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    NSInteger totalCount = 0;
-//    NSInteger maxCount = [[[self.datasource objectAtIndex:section] rooms] count];
-//    for (Room *room in [[self.datasource objectAtIndex:section] rooms]) {
-//        if (room.reservation) {
-//            totalCount++;
-//        }
-//    };
-//    return maxCount - totalCount;
-    
     return [[[self.datasource objectAtIndex:section] rooms] count];
 }
 
@@ -120,13 +111,6 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-//    
-//    NSMutableArray * roomsInSection = [NSMutableArray new];
-//    for (Room *room in [[self.datasource objectAtIndex:indexPath.section] rooms]) {
-//        if (!room.reservation) {
-//            [roomsInSection addObject:room];
-//        }
-//    }
 
     NSArray * roomsInSection = [[[self.datasource objectAtIndex:indexPath.section] rooms] allObjects];
     Room *room = [roomsInSection objectAtIndex:indexPath.row];

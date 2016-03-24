@@ -50,6 +50,8 @@
     
     Reservation * newReservation = [NSEntityDescription insertNewObjectForEntityForName:@"Reservation" inManagedObjectContext:context];
     
+    NSLog(@"%@", newReservation.room);
+    
     newReservation.startDate = startTime;
     newReservation.endDate = endTime;
     newReservation.room = room;
@@ -58,6 +60,8 @@
     newReservation.guest = newGuest;
     
     newReservation.room.reservation = newReservation;
+    
+    //Not sure where, but if you reserve the same room twice, just under different times, then it'll cause the earlier reservation to ''forget'' it's room. I tried to find the bug, but no I've got no clue. I'm gonna call it quits and get some sleep.
     
     NSError *saveError;
     BOOL isSaved = [context save:&saveError];

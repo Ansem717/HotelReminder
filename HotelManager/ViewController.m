@@ -14,6 +14,7 @@
 #import "Room.h"
 #import "Guest.h"
 #import "Hotel.h"
+#import "LookupViewController.h"
 
 @interface ViewController ()
 
@@ -128,21 +129,24 @@
 }
 
 - (void)lookupButtonSelected:(UIButton *)sender {
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    NSManagedObjectContext *context = [delegate managedObjectContext];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
-    NSError *error;
-    NSArray * results = [context executeFetchRequest:request error:&error];
-    if (error) {
-        NSLog(@"%@", [error localizedDescription]);
-        return;
-    }
-    for (Reservation * reservation in results) {
-        NSLog(@"STARTS ON: %@", reservation.startDate);
-        NSLog(@"ENDS ON: %@", reservation.endDate);
-        NSLog(@"IN ROOM: Room %@ in the %@", reservation.room.roomNum, reservation.room.hotel.name);
-        NSLog(@"WITH GUEST: %@ %@\n\n\n", reservation.guest.firstName, reservation.guest.lastName);
-    }
+
+    [self.navigationController pushViewController:[[LookupViewController alloc]init] animated:YES];
+    
+//    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+//    NSManagedObjectContext *context = [delegate managedObjectContext];
+//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
+//    NSError *error;
+//    NSArray * results = [context executeFetchRequest:request error:&error];
+//    if (error) {
+//        NSLog(@"%@", [error localizedDescription]);
+//        return;
+//    }
+//    for (Reservation * reservation in results) {
+//        NSLog(@"STARTS ON: %@", reservation.startDate);
+//        NSLog(@"ENDS ON: %@", reservation.endDate);
+//        NSLog(@"IN ROOM: Room %@ in the %@", reservation.room.roomNum, reservation.room.hotel.name);
+//        NSLog(@"WITH GUEST: %@ %@\n\n\n", reservation.guest.firstName, reservation.guest.lastName);
+//    }
 }
 
 
