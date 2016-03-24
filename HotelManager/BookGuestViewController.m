@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Guest.h"
 #import "Reservation.h"
+#import "ReservationService.h"
 
 @interface BookGuestViewController ()
 
@@ -27,9 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSLog(@"%@", self.startDate);
-//    NSLog(@"%@", self.endDate);
-//    NSLog(@"Room %@ - %@ beds for $%@.99 per night", self.room.roomNum, self.room.numOfBeds, self.room.rate);
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationItem setTitle:@"Guest Name"];
     [self setupView];
@@ -179,42 +177,26 @@
 
 
 - (void)saveButtonClicked:(UIButton *)sender{
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    NSManagedObjectContext *context = delegate.managedObjectContext;
-    Guest * newGuest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:context];
-    
-    newGuest.firstName = self.firstNameINPUT.text;
-    newGuest.lastName = self.lastNameINPUT.text;
-    newGuest.email = self.emailINPUT.text;
-    
-    Reservation * newReservation = [NSEntityDescription insertNewObjectForEntityForName:@"Reservation" inManagedObjectContext:context];
-    
-    newReservation.startDate = self.startDate;
-    newReservation.endDate = self.endDate;
-    newReservation.room = self.room;
-    
-    newGuest.reservation = newReservation;
-    newReservation.guest = newGuest; //I was going to set both of these to be weak as to avoid a retain cycle...
-                                    //  But we have set rooms.hotel and hotel.rooms the same way without making the properties weak.
-                                    //  What am I missing? Is this not a retain cycle? Or should we have set them all to be weak?
-    
-    newReservation.room.reservation = newReservation;
-    
-    NSError *saveError;
-    BOOL isSaved = [context save:&saveError];
-    
-    if (isSaved) {
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Reservation Saved" message:@"Thank you for reserving. An e-mail will be sent to you shortly." preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }]];
-        
-        [self presentViewController:alert animated:YES completion:nil];
-    } else {
-        NSLog(@"%@", [saveError localizedDescription]);
-    }
-    
+    [[ReservationService shared]addReservationWithStartTime:self.startDate
+                                                 andEndTime:self.endDate
+                                                    andRoom:self.room
+                                          andGuestFirstName:self.firstNameINPUT.text
+                                           andGuestLastName:self.lastNameINPUT.text
+                                              andGuestEmail:self.emailINPUT.text
+                                                 completion:^(BOOL success, NSError *error)
+    {
+        if (error) {
+            NSLog(@"%@", [error localizedDescription]);
+        } else if (success) {
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Reservation Saved" message:@"Thank you for reserving. An e-mail will be sent to you shortly." preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }]];
+            
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    }];
 }
 
 @end

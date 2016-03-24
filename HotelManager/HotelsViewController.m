@@ -26,10 +26,10 @@
         NSManagedObjectContext *context = delegate.managedObjectContext;
         NSFetchRequest *q = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
         NSError *error;
-        _datasource = [context executeFetchRequest:q error:&error];
         if (error) {
             NSLog(@"%@", [error localizedDescription]);
         }
+        _datasource = [context executeFetchRequest:q error:&error];
     }
     return _datasource;
 }
