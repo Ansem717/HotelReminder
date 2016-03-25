@@ -12,6 +12,8 @@
 		E99CA5021CA2070B00A94A13 /* BookTimesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E99CA5011CA2070B00A94A13 /* BookTimesViewController.m */; };
 		E99F77841CA4AC7100B908EF /* HotelManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E99F77831CA4AC7100B908EF /* HotelManagerTests.m */; };
 		E99F778C1CA4ADAF00B908EF /* ReservationServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E99F778B1CA4ADAF00B908EF /* ReservationServiceTests.m */; };
+		E99F77941CA4BDA800B908EF /* HotelManager1.1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E99F77921CA4BDA800B908EF /* HotelManager1.1.xcdatamodeld */; };
+		E99F77961CA4C07E00B908EF /* MappModel1.0_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E99F77951CA4C07E00B908EF /* MappModel1.0_1.1.xcmappingmodel */; };
 		E9AF04B71CA0A7BB007AE3BA /* RoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AF04B61CA0A7BB007AE3BA /* RoomsViewController.m */; };
 		E9C4B1D21CA05CD600298E51 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E9C4B1D11CA05CD600298E51 /* main.m */; };
 		E9C4B1D51CA05CD600298E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E9C4B1D41CA05CD600298E51 /* AppDelegate.m */; };
@@ -56,6 +58,8 @@
 		E99F77831CA4AC7100B908EF /* HotelManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotelManagerTests.m; sourceTree = "<group>"; };
 		E99F77851CA4AC7100B908EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E99F778B1CA4ADAF00B908EF /* ReservationServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReservationServiceTests.m; sourceTree = "<group>"; };
+		E99F77931CA4BDA800B908EF /* HotelManager1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HotelManager1.1.xcdatamodel; sourceTree = "<group>"; };
+		E99F77951CA4C07E00B908EF /* MappModel1.0_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappModel1.0_1.1.xcmappingmodel; sourceTree = "<group>"; };
 		E9AF04B51CA0A7A0007AE3BA /* RoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomsViewController.h; sourceTree = "<group>"; };
 		E9AF04B61CA0A7BB007AE3BA /* RoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsViewController.m; sourceTree = "<group>"; };
 		E9C4B1CD1CA05CD600298E51 /* HotelManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotelManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +207,8 @@
 				E9E834791CA069B700B3C169 /* Class */,
 				E9E834781CA069A700B3C169 /* Category */,
 				E9C4B1DC1CA05CD600298E51 /* HotelManager.xcdatamodeld */,
+				E99F77921CA4BDA800B908EF /* HotelManager1.1.xcdatamodeld */,
+				E99F77951CA4C07E00B908EF /* MappModel1.0_1.1.xcmappingmodel */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -366,6 +372,7 @@
 				E9E8346B1CA0670D00B3C169 /* Reservation.m in Sources */,
 				E9C50ACC1CA394A500340B5E /* LookupViewController.m in Sources */,
 				E9E8346C1CA0670D00B3C169 /* Guest+CoreDataProperties.m in Sources */,
+				E99F77941CA4BDA800B908EF /* HotelManager1.1.xcdatamodeld in Sources */,
 				E9E8346D1CA0670D00B3C169 /* Guest.m in Sources */,
 				E9E834701CA0670D00B3C169 /* Hotel+CoreDataProperties.m in Sources */,
 				E9E834711CA0670D00B3C169 /* Hotel.m in Sources */,
@@ -378,6 +385,7 @@
 				E97491F11CA223950004BBE9 /* BookRoomsViewController.m in Sources */,
 				E9C50AC91CA3779800340B5E /* ReservationService.m in Sources */,
 				E9C4B1D21CA05CD600298E51 /* main.m in Sources */,
+				E99F77961CA4C07E00B908EF /* MappModel1.0_1.1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +571,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		E99F77921CA4BDA800B908EF /* HotelManager1.1.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E99F77931CA4BDA800B908EF /* HotelManager1.1.xcdatamodel */,
+			);
+			currentVersion = E99F77931CA4BDA800B908EF /* HotelManager1.1.xcdatamodel */;
+			path = HotelManager1.1.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		E9C4B1DC1CA05CD600298E51 /* HotelManager.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
