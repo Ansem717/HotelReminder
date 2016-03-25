@@ -152,16 +152,6 @@
 
 - (void)startDateChanged:(UIDatePicker *)sender {
     [self.endDatePicker setMinimumDate:sender.date];
-    
-    //The homework asked to alert the user if they attempt to end the reservation before starting the reservation.
-    
-    //  So, sure, I could say:
-    //                        [self.startDatePicker.date compare:self.endDatePicker.date]  ==  NSOrderedDescending
-    //  then I would present an alert, but I feel that alerts are somewhat tacky.
-    
-    //  To me, it is more professional to consistently change the end date's minimum date to equal the start date.
-    //  This way it's impossible for the end date to be before the start date.
-    //  I'm not sure if the homework required us to use the compare method, and I hope this comment proves my knowledge on it.
 }
 
 

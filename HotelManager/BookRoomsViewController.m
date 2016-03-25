@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "Room.h"
 #import "Hotel.h"
+#import "ReservationService.h"
 
 @interface BookRoomsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -101,14 +102,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger totalCount = 0;
-    NSInteger maxCount = [[[self.datasource objectAtIndex:section] rooms] count];
-    for (Room *room in [[self.datasource objectAtIndex:section] rooms]) {
-        if (room.reservation) {
-            totalCount++;
-        }
-    };
-    return maxCount - totalCount;
+    return [[[self.datasource objectAtIndex:section] rooms] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,15 +111,8 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    
-    NSMutableArray * roomsInSection = [NSMutableArray new];
-    
-    for (Room *room in [[self.datasource objectAtIndex:indexPath.section] rooms]) {
-        if (!room.reservation) {
-            [roomsInSection addObject:room];
-        }
-    }
-    
+
+    NSArray * roomsInSection = [[[self.datasource objectAtIndex:indexPath.section] rooms] allObjects];
     Room *room = [roomsInSection objectAtIndex:indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"Room %@ - %@ beds for $%@.99 per night", room.roomNum, room.numOfBeds, room.rate];
     
@@ -138,19 +125,25 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BookGuestViewController * bookGuestVC = [[BookGuestViewController alloc]init];
-    bookGuestVC.startDate = self.startDate;
-    bookGuestVC.endDate = self.endDate;
-    
-    NSMutableArray * roomsInSection = [NSMutableArray new];
-    for (Room *room in [[self.datasource objectAtIndex:indexPath.section] rooms]) {
-        if (!room.reservation) {
-            [roomsInSection addObject:room];
+    NSArray * roomsInSection = [[[self.datasource objectAtIndex:indexPath.section] rooms] allObjects];
+    [[ReservationService shared] doesReservationExistWithStartTime:self.startDate andEndTime:self.endDate andRoom:[roomsInSection objectAtIndex:indexPath.row] completion:^(BOOL doesExist) {
+        
+        if (!doesExist) {
+            BookGuestViewController * bookGuestVC = [[BookGuestViewController alloc]init];
+            bookGuestVC.startDate = self.startDate;
+            bookGuestVC.endDate = self.endDate;
+            bookGuestVC.room = [roomsInSection objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:bookGuestVC animated:YES];
+        
+        } else {
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Sorry!" message:@"The room and times you selected are already taken!" preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
+            
+            [self presentViewController:alert animated:YES completion:nil];
         }
-    }
-    bookGuestVC.room = [roomsInSection objectAtIndex:indexPath.row];
-    
-    [self.navigationController pushViewController:bookGuestVC animated:YES];
+    }];
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
