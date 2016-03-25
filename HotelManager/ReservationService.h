@@ -24,4 +24,6 @@ typedef void(^savedCompletion)(BOOL success, NSError *error);
 - (void)removeReservation:(Reservation *)reservation;
 - (void)doesReservationExistWithStartTime:(NSDate *)startTime andEndTime:(NSDate *)endTime andRoom:(Room *)room completion:(void(^)(BOOL doesExist))completion;
 
++ (int)addNumber:(int)number1 with:(int)number2;
+
 @end
